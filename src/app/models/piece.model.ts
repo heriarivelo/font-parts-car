@@ -10,3 +10,17 @@ export interface Piece {
     poidsKg: number;
     // margePourcentage: number;
   }
+
+  export interface PieceBdd {
+    id: number;
+    codeArt: string;
+    marque?: string;
+    oem?: string;
+    autoFinal?: string;
+    lib?: string;
+    stocks: {
+      quantite: number;
+      status: string;
+      prixFinal?: number;
+    }[];
+  }

@@ -3,6 +3,8 @@ import { Piece } from '../models/piece.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as XLSX from 'xlsx';
+import { environment } from '../environments/environment';
+
 
 interface ImportPayload {
   importData: {
@@ -33,6 +35,7 @@ interface ImportPayload {
   providedIn: 'root'
 })
 export class PieceService {
+  private apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
   private pieces: Piece[] = [
     {
@@ -203,7 +206,9 @@ export class PieceService {
           importParts: this.pieces.map(piece => ({
             CODE_ART: piece.code,
             marque: piece.marque,
-            LIB1: piece.reference,
+            LIB1: piece.libelle,
+            oem: piece.reference,
+            auto_final: piece.autofinal,
             Qte: piece.quantite,
             qte_arv: piece.quantiteArrivee || piece.quantite,
             PRIX_UNIT: piece.prixUnitaireEur,
@@ -212,7 +217,7 @@ export class PieceService {
           }))
         };
     
-        return this.http.post('/api/imports', payload);
+        return this.http.post(`${this.apiUrl}/import`, payload);
       }
 
       private calculerPrixFinal(piece: Piece): number {
@@ -310,15 +315,15 @@ export class PieceService {
           const jsonData = XLSX.utils.sheet_to_json(firstSheet);
 
           this.pieces = jsonData.map((item: any) => ({
-            code: item['Code Article'] || `ART-${Math.random().toString(36).substr(2, 5).toUpperCase()}`,
+            code: item['CODE ART.'] || `ART-${Math.random().toString(36).substr(2, 5).toUpperCase()}`,
             marque: item['Marque 1+2'] || '',
             reference: item['oem1+oem2'] || '',
             autofinal: item['auto final'] || '',
             libelle: item['LIB1'] || '',
-            quantite: Number(item['Quantité']) || 1,
-            quantiteArrivee: Number(item['QTE ARRIVAL']) || Number(item['Quantité']),
-            prixUnitaireEur: Number(item['Prix Unitaire (€)']) || 0,
-            poidsKg: Number(item['Poids (kg)']) || 0
+            quantite: Number(item['Qté']) || 1,
+            quantiteArrivee: Number(item['QTE ARRIVAL']) || Number(item['Qté']),
+            prixUnitaireEur: Number(item['PRIX UNIT(€)']) || 0,
+            poidsKg: Number(item['POIDS NET/ART (KG)']) || 0
           }));
 
           resolve();
@@ -335,5 +340,13 @@ export class PieceService {
   private arrondirInf(valeur: number, precision: number): number {
     const factor = Math.pow(10, -precision);
     return Math.floor(valeur / factor) * factor;
+  }
+
+  getPiece(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/pieces`);
+  }
+
+  searchPieces(term: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/pieces/search?q=${term}`);
   }
 }

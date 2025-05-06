@@ -19,51 +19,76 @@
         <!-- Dashboard Content -->
         <main class="p-6">
             <!-- KPI Cards -->
+            <!-- analytics.component.html -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <!-- Pièces en stock -->
                 <div class="bg-white p-6 rounded-lg shadow">
                     <div class="flex justify-between">
                         <div>
                             <p class="text-gray-500">Pièces en stock</p>
-                            <h3 class="text-2xl font-bold">1,248</h3>
+                            <h3 class="text-2xl font-bold">
+                                {{ isLoading ? 'Chargement...' : (analyticsData.totalStock | number) }}
+                            </h3>
                         </div>
                         <div class="bg-blue-100 p-3 rounded-full">
                             <i class="fas fa-box-open text-blue-600"></i>
                         </div>
                     </div>
-                    <p class="text-green-500 mt-2"><i class="fas fa-arrow-up"></i> 12% vs mois dernier</p>
+                    <p class="text-green-500 mt-2" *ngIf="!isLoading && analyticsData.trends.stockChange >= 0">
+                        <i class="fas fa-arrow-up"></i> {{ analyticsData.trends.stockChange }}% vs mois dernier
+                    </p>
+                    <p class="text-red-500 mt-2" *ngIf="!isLoading && analyticsData.trends.stockChange < 0">
+                        <i class="fas fa-arrow-down"></i> {{ analyticsData.trends.stockChange * -1 }}% vs mois dernier
+                    </p>
                 </div>
 
+                <!-- Valeur du stock -->
                 <div class="bg-white p-6 rounded-lg shadow">
                     <div class="flex justify-between">
                         <div>
                             <p class="text-gray-500">Valeur du stock</p>
-                            <h3 class="text-2xl font-bold">285M MGA</h3>
+                            <h3 class="text-2xl font-bold">
+                                {{ isLoading ? 'load...' : (analyticsData.stockValue | number:'1.0-0') }} MGA
+                            </h3>
                         </div>
                         <div class="bg-green-100 p-3 rounded-full">
                             <i class="fas fa-coins text-green-600"></i>
                         </div>
                     </div>
-                    <p class="text-red-500 mt-2"><i class="fas fa-arrow-down"></i> 5% vs mois dernier</p>
+                    <p class="text-green-500 mt-2" *ngIf="!isLoading && analyticsData.trends.valueChange >= 0">
+                        <i class="fas fa-arrow-up"></i> {{ analyticsData.trends.valueChange }}% vs mois dernier
+                    </p>
+                    <p class="text-red-500 mt-2" *ngIf="!isLoading && analyticsData.trends.valueChange < 0">
+                        <i class="fas fa-arrow-down"></i> {{ analyticsData.trends.valueChange * -1 }}% vs mois dernier
+                    </p>
                 </div>
 
+                <!-- Commandes en cours -->
                 <div class="bg-white p-6 rounded-lg shadow">
                     <div class="flex justify-between">
                         <div>
                             <p class="text-gray-500">Commandes en cours</p>
-                            <h3 class="text-2xl font-bold">18</h3>
+                            <h3 class="text-2xl font-bold">
+                                {{ isLoading ? 'load...' : analyticsData.pendingOrders }}
+                            </h3>
                         </div>
                         <div class="bg-orange-100 p-3 rounded-full">
                             <i class="fas fa-shipping-fast text-orange-600"></i>
                         </div>
                     </div>
-                    <p class="text-green-500 mt-2"><i class="fas fa-arrow-up"></i> 3 nouvelles</p>
+                    <p class="text-green-500 mt-2" *ngIf="!isLoading && analyticsData.trends.newOrders > 0">
+                        <i class="fas fa-arrow-up"></i> {{ analyticsData.trends.newOrders }} nouvelles
+                    </p>
                 </div>
 
+                <!-- Marge moyenne -->
                 <div class="bg-white p-6 rounded-lg shadow">
                     <div class="flex justify-between">
                         <div>
                             <p class="text-gray-500">Marge moyenne</p>
-                            <h3 class="text-2xl font-bold">27%</h3>
+                            <h3 class="text-2xl font-bold">
+                                {{ isLoading ? 'load...' : analyticsData.averageMargin }}%
+                            </h3>
                         </div>
                         <div class="bg-purple-100 p-3 rounded-full">
                             <i class="fas fa-percentage text-purple-600"></i>
@@ -96,7 +121,8 @@
                                     <p class="font-medium">Filtre à air K&N</p>
                                     <p class="text-sm text-gray-500">Référence: FA-KN-1298</p>
                                 </div>
-                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">5 restants</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">5
+                                    restants</span>
                             </div>
                         </div>
                     </div>
@@ -143,7 +169,8 @@
                                 <p class="text-2xl font-bold text-blue-800">342,000 MGA</p>
                                 <p class="text-sm text-gray-500">Marge: 87,000 MGA (25%)</p>
                             </div>
-                            <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Enregistrer le prix</button>
+                            <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Enregistrer
+                                le prix</button>
                         </div>
                     </div>
                 </div>
@@ -175,13 +202,15 @@
                             <div class="border-b pb-4">
                                 <div class="flex justify-between mb-1">
                                     <span class="font-medium">CMD-2023-026</span>
-                                    <span class="text-yellow-600 bg-yellow-50 px-2 py-1 rounded text-xs">En préparation</span>
+                                    <span class="text-yellow-600 bg-yellow-50 px-2 py-1 rounded text-xs">En
+                                        préparation</span>
                                 </div>
                                 <p class="text-sm text-gray-500">22 pièces</p>
                                 <p class="text-sm">Expédition prévue 18/11/2023</p>
                             </div>
                         </div>
-                        <button class="w-full mt-4 border border-blue-600 text-blue-600 py-2 rounded-lg hover:bg-blue-50">
+                        <button
+                            class="w-full mt-4 border border-blue-600 text-blue-600 py-2 rounded-lg hover:bg-blue-50">
                             <i class="fas fa-plus mr-2"></i>Nouvelle commande
                         </button>
                     </div>

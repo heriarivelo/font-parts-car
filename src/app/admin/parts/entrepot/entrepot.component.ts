@@ -104,7 +104,7 @@ export class EntrepotComponent {
 
     try {
       await lastValueFrom(
-        this.http.post('http://localhost:5000/api/entrepot', { libelle: this.entrepot_libelle })
+        this.http.post('http://localhost:7000/api/entrepot', { libelle: this.entrepot_libelle })
       );
       this.entrepot_libelle = '';
       window.location.reload();

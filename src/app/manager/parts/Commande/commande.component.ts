@@ -74,7 +74,7 @@ export class CommandeMComponent implements OnInit {
       .set('limit', this.filters.pageSize.toString());
 
     try {
-      const response = await this.http.get<any>('http://localhost:5000/api/commande', { params }).toPromise();
+      const response = await this.http.get<any>('http://localhost:7000/api/commande', { params }).toPromise();
       this.commandes = response.data;
     } catch (error) {
       console.error('Erreur lors de la récupération des commandes:', error);

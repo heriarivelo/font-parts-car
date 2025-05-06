@@ -33,6 +33,12 @@ export class CalculatriceComponent {
     this.parametres = this.pieceService.getParametres();
   }
 
+  description = '';
+  isSaving = false;
+  success = false;
+  error = '';
+  showImportModal = false;
+
   appliquerParametres(): void {
     this.pieceService.setParametres(this.parametres);
   }
@@ -96,5 +102,21 @@ export class CalculatriceComponent {
       console.error('Erreur lors de l\'import:', error);
       alert('Une erreur est survenue lors de l\'import du fichier Excel.');
     }
+  }
+
+  confirmImport() {
+    this.isSaving = true;
+    this.error = '';
+    
+    this.pieceService.enregistrerImport(this.description).subscribe({
+      next: () => {
+        this.isSaving = false;
+        this.success = true;
+      },
+      error: (err) => {
+        this.isSaving = false;
+        this.error = 'Erreur lors de l\'enregistrement: ' + err.message;
+      }
+    });
   }
 }

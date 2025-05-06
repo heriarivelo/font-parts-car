@@ -31,6 +31,8 @@ import { FactureMComponent } from './app/manager/parts/Facture/facture.component
 import { FactureMDComponent } from './app/manager/parts/Facture/Detaille/factureD.component';
 import { StocksMComponent } from './app/manager/parts/stocks/stocks.component';
 import { EntrepotComponent } from './app/admin/parts/entrepot/entrepot.component';
+import { ProduitComponent } from './app/admin/parts/produit/produit.component';
+import { ImportListComponent } from './app/admin/parts/import-list/import-list.component';
 
 
 const routes: Routes = [
@@ -50,6 +52,7 @@ const routes: Routes = [
   { path: 'admin-gestion-users', component: UserManagementComponent, canActivate: [AuthGuard, RoleGuard],data: { roles: ['ADMIN']} },
   { path: 'admin-clients-pro', component: ProfessionalClientsComponent, canActivate: [AuthGuard, RoleGuard],data: { roles: ['ADMIN']} },
   { path: 'entrepot' , component: EntrepotComponent, canActivate: [AuthGuard, RoleGuard],data: { roles: ['ADMIN']} },
+  { path: 'importation-historique' , component: ImportListComponent, canActivate: [AuthGuard, RoleGuard],data: { roles: ['ADMIN']} },
 
 
 
@@ -64,6 +67,10 @@ const routes: Routes = [
     { path: 'manager/facture', component: FactureMComponent,canActivate: [AuthGuard, RoleGuard],data: { roles: ['MANAGER']} },
     { path: 'manager/facture/D', component: FactureMDComponent,canActivate: [AuthGuard, RoleGuard],data: { roles: ['MANAGER']} },
     { path: 'manager/stock' , component: StocksMComponent,canActivate: [AuthGuard, RoleGuard],data: { roles: ['MANAGER']} },
+
+
+      { path: 'inventaire-piece' , component: ProduitComponent,canActivate: [AuthGuard, RoleGuard],data: { roles: ['MANAGER' , 'ADMIN']} },
+    
 
 
 

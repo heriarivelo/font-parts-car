@@ -1,133 +1,137 @@
 <!-- inventory.component.html -->
-<div>
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold text-gray-800">Gestion des Pièces</h2>
-      <button class="bg-primary hover:bg-red-800 text-white px-4 py-2 rounded-lg flex items-center transition">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-        </svg>
-        Ajouter une pièce
-      </button>
-    </div>
-    
-    <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-      <div class="bg-white p-4 rounded-lg shadow">
-        <p class="text-sm text-gray-500">Total Pièces</p>
-        <p class="text-2xl font-bold">1,248</p>
-        <p class="text-xs text-green-500 flex items-center">
-          <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-          </svg>
-          12% depuis le mois dernier
-        </p>
+<div class="container mx-auto px-4 py-8">
+  <!-- Header avec indicateurs -->
+  <header class="mb-8">
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">Gestion des Stocks</h1>
+        <p class="text-gray-600">Suivi en temps réel de votre inventaire</p>
       </div>
-      
-      <div class="bg-white p-4 rounded-lg shadow">
-        <p class="text-sm text-gray-500">Pièces en Stock</p>
-        <p class="text-2xl font-bold">856</p>
-      </div>
-      
-      <div class="bg-white p-4 rounded-lg shadow">
-        <p class="text-sm text-gray-500">Pièces Faible Stock</p>
-        <p class="text-2xl font-bold text-yellow-600">42</p>
-      </div>
-      
-      <div class="bg-white p-4 rounded-lg shadow">
-        <p class="text-sm text-gray-500">Pièces Épuisées</p>
-        <p class="text-2xl font-bold text-red-600">18</p>
-      </div>
-    </div>
-    
-    <!-- Tableau des Pièces -->
-    <div class="bg-white rounded-lg shadow overflow-hidden">
-      <div class="p-4 border-b flex justify-between items-center">
-        <div class="flex space-x-4">
-          <select class="border rounded px-3 py-1 text-sm">
-            <option>Toutes catégories</option>
-            <option>Moteur</option>
-            <option>Freinage</option>
-            <option>Suspension</option>
-            <option>Électricité</option>
-          </select>
-          
-          <select class="border rounded px-3 py-1 text-sm">
-            <option>Tous les statuts</option>
-            <option>En stock</option>
-            <option>Faible stock</option>
-            <option>Épuisé</option>
-          </select>
+      <div class="flex space-x-3" *ngIf="analytics">
+        <div class="bg-white p-3 rounded-lg shadow-sm text-center min-w-32">
+          <div class="text-sm text-gray-500">Pièces en stock</div>
+          <div class="text-2xl font-bold text-blue-600">{{ analytics.totalItems }}</div>
         </div>
-        
-        <button class="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
-          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-          </svg>
-          Exporter
+        <div class="bg-white p-3 rounded-lg shadow-sm text-center min-w-32">
+          <div class="text-sm text-gray-500">En rupture</div>
+          <div class="text-2xl font-bold text-red-600">{{ analytics.outOfStock }}</div>
+        </div>
+        <div class="bg-white p-3 rounded-lg shadow-sm text-center min-w-32">
+          <div class="text-sm text-gray-500">Valeur totale</div>
+          <div class="text-2xl font-bold text-green-600">{{ analytics.totalValue | currency:'MGA' }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barre de contrôle -->
+    <div class="flex justify-between items-center mt-6">
+      <div class="relative w-80">
+        <input type="text" placeholder="Rechercher par code, référence..."
+          class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+      </div>
+      <div class="flex space-x-3">
+        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+          <i class="fas fa-file-export mr-2"></i> Exporter
+        </button>
+        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center">
+          <i class="fas fa-plus mr-2"></i> Réapprovisionner
         </button>
       </div>
-      
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Référence</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Désignation</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marque</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr *ngFor="let item of inventoryItems" class="hover:bg-gray-50">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{item.reference}}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.name}}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.category}}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.brand}}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.quantity}}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.price}} €</td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span [class]="getStatusClass(item.status)" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                  {{item.status}}
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex space-x-2">
-                <button class="text-indigo-600 hover:text-indigo-900">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                  </svg>
-                </button>
-                <button class="text-yellow-600 hover:text-yellow-900">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                  </svg>
-                </button>
-                <button class="text-red-600 hover:text-red-900">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                  </svg>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      
-      <div class="px-6 py-4 border-t flex items-center justify-between">
-        <div class="text-sm text-gray-500">
-          Affichage de <span class="font-medium">1</span> à <span class="font-medium">10</span> sur <span class="font-medium">1248</span> résultats
+    </div>
+  </header>
+
+  <!-- Tableau des stocks -->
+  <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
+    <!-- En-têtes de colonnes -->
+    <div class="grid grid-cols-12 bg-gray-100 p-4 font-medium text-gray-700 border-b">
+      <div class="col-span-2">Code</div>
+      <div class="col-span-3">Désignation</div>
+      <div class="col-span-2">Marque</div>
+      <div class="col-span-1 text-center">Dispo.</div>
+      <div class="col-span-1 text-center">Vendu</div>
+      <div class="col-span-2 text-right">Seuil alerte</div>
+      <div class="col-span-1 text-center">Statut</div>
+    </div>
+
+    <!-- Lignes de données -->
+    <ng-container *ngIf="!isLoading; else loading">
+      <div class="divide-y divide-gray-200">
+        <div *ngFor="let stock of stocks" class="grid grid-cols-12 p-4 hover:bg-gray-50 items-center"
+          [class.bg-red-50]="stock.status === 'RUPTURE'">
+          <div class="col-span-2 font-mono text-blue-600">{{ stock.codeArt }}</div>
+          <div class="col-span-3">{{ stock.lib1 }}</div>
+          <div class="col-span-2">{{ stock.product.marque || '-' }}</div>
+          <div class="col-span-1 text-center font-medium" [class.text-red-600]="stock.status === 'RUPTURE'"
+            [class.text-yellow-600]="stock.quantite < 5 && stock.status !== 'RUPTURE'">
+            {{ stock.quantite }}
+          </div>
+          <div class="col-span-1 text-center text-gray-500">{{ stock.quantiteVendu }}</div>
+          <div class="col-span-2 text-right">
+            <span class="text-sm">5</span>
+            <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+              <div class="h-2 rounded-full" [ngClass]="getProgressColor(stock.quantite)"
+                [style.width]="getProgressWidth(stock.quantite)"></div>
+            </div>
+          </div>
+          <div class="col-span-1 text-center">
+            <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getStatusClass(stock.status)">
+              {{ stock.status }}
+            </span>
+          </div>
         </div>
-        <div class="flex space-x-2">
-          <button class="px-3 py-1 border rounded text-sm">Précédent</button>
-          <button class="px-3 py-1 border rounded bg-indigo-600 text-white text-sm">1</button>
-          <button class="px-3 py-1 border rounded text-sm">2</button>
-          <button class="px-3 py-1 border rounded text-sm">3</button>
-          <button class="px-3 py-1 border rounded text-sm">Suivant</button>
+      </div>
+    </ng-container>
+
+    <ng-template #loading>
+      <div class="p-8 text-center">
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+        <p class="mt-2 text-gray-600">Chargement des données...</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Section analyse -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Graphique top pièces -->
+    <div class="bg-white p-4 rounded-lg shadow-sm">
+      <h3 class="font-medium text-gray-800 mb-3">Top pièces vendues</h3>
+      <div class="space-y-2">
+        <div *ngFor="let stock of stocks | slice:0:3" class="flex items-center">
+          <div class="w-32 text-sm">{{ stock.codeArt }}</div>
+          <div class="flex-1 bg-gray-200 rounded-full h-4">
+            <div class="bg-blue-600 h-4 rounded-full" [style.width]="(stock.quantiteVendu / maxSold) * 100 + '%'"></div>
+          </div>
+          <div class="w-10 text-right text-sm font-medium">{{ stock.quantiteVendu }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alertes stock -->
+    <div class="bg-white p-4 rounded-lg shadow-sm">
+      <h3 class="font-medium text-gray-800 mb-3">Alertes stock</h3>
+      <div class="space-y-3">
+        <div *ngFor="let stock of stocks | filter:'status':'RUPTURE'" class="flex items-start">
+          <div class="mt-1 mr-3 text-red-500">
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <div>
+            <div class="font-medium">{{ stock.codeArt }} - Rupture de stock</div>
+            <div class="text-sm text-gray-600">{{ stock.lib1 }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mouvements récents -->
+    <div class="bg-white p-4 rounded-lg shadow-sm">
+      <h3 class="font-medium text-gray-800 mb-3">Mouvements récents</h3>
+      <div class="space-y-2 text-sm">
+        <div *ngFor="let stock of stocks | slice:0:3" class="flex justify-between">
+          <div>{{ stock.quantite }} {{ stock.codeArt }}</div>
+          <!-- <div class="text-gray-500">{{ stock.product.updatedAt | date:'dd/MM/yyyy' }}</div> -->
         </div>
       </div>
     </div>
   </div>
+</div>

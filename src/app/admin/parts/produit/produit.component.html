@@ -1,0 +1,218 @@
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">Inventaire des Pièces</h1>
+        <div class="flex justify-between items-center mt-4">
+            <div class="relative w-64">
+                <input type="text" placeholder="Rechercher une pièce..." 
+                       class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+            </div>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                <i class="fas fa-plus mr-2"></i> Ajouter une pièce
+            </button>
+        </div>
+    </header>
+
+    <!-- Filters -->
+    <div class="bg-white p-4 rounded-lg shadow-sm mb-6">
+        <div class="flex flex-wrap gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Entrepôt</label>
+                <select class="w-48 px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                    <option>Tous les entrepôts</option>
+                    <option>Principal</option>
+                    <option>Secondaire</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+                <select class="w-48 px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                    <option>Tous les statuts</option>
+                    <option>Disponible</option>
+                    <option>En rupture</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Marque</label>
+                <select class="w-48 px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                    <option>Toutes les marques</option>
+                    <option>Bosch</option>
+                    <option>Valeo</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Parts List -->
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+        <!-- Table Header -->
+        <div class="grid grid-cols-12 bg-gray-100 p-4 font-medium text-gray-700 border-b">
+            <div class="col-span-2">Code Art.</div>
+            <div class="col-span-3">Désignation</div>
+            <div class="col-span-2">Marque</div>
+            <div class="col-span-1 text-center">Stock</div>
+            <div class="col-span-2 text-right">Prix</div>
+            <div class="col-span-2 text-center">Actions</div>
+        </div>
+
+        <!-- Table Rows -->
+        <div class="divide-y divide-gray-200">
+            <!-- Part 1 -->
+            <div class="grid grid-cols-12 p-4 hover:bg-gray-50 items-center">
+                <div class="col-span-2 font-medium text-blue-600">FE38677</div>
+                <div class="col-span-3">Filtre à carburant</div>
+                <div class="col-span-2">Bosch</div>
+                <div class="col-span-1 text-center">
+                    <span class="px-2 py-1 bg-green-100 text-green-800 text-sm rounded-full">24</span>
+                </div>
+                <div class="col-span-2 text-right font-medium">120.50 €</div>
+                <div class="col-span-2 flex justify-center space-x-2">
+                    <button class="text-blue-600 hover:text-blue-800 p-1">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="text-red-600 hover:text-red-800 p-1">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="text-green-600 hover:text-green-800 p-1">
+                        <i class="fas fa-cubes"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Part 2 -->
+            <div class="grid grid-cols-12 p-4 hover:bg-gray-50 items-center">
+                <div class="col-span-2 font-medium text-blue-600">BR43122</div>
+                <div class="col-span-3">Plaquette de frein</div>
+                <div class="col-span-2">Valeo</div>
+                <div class="col-span-1 text-center">
+                    <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full">5</span>
+                </div>
+                <div class="col-span-2 text-right font-medium">89.90 €</div>
+                <div class="col-span-2 flex justify-center space-x-2">
+                    <button class="text-blue-600 hover:text-blue-800 p-1">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="text-red-600 hover:text-red-800 p-1">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="text-green-600 hover:text-green-800 p-1">
+                        <i class="fas fa-cubes"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Part 3 -->
+            <div class="grid grid-cols-12 p-4 hover:bg-gray-50 items-center">
+                <div class="col-span-2 font-medium text-blue-600">AM33509</div>
+                <div class="col-span-3">Amortisseur avant</div>
+                <div class="col-span-2">Monroe</div>
+                <div class="col-span-1 text-center">
+                    <span class="px-2 py-1 bg-red-100 text-red-800 text-sm rounded-full">0</span>
+                </div>
+                <div class="col-span-2 text-right font-medium">145.00 €</div>
+                <div class="col-span-2 flex justify-center space-x-2">
+                    <button class="text-blue-600 hover:text-blue-800 p-1">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="text-red-600 hover:text-red-800 p-1">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="text-green-600 hover:text-green-800 p-1">
+                        <i class="fas fa-cubes"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-between items-center mt-6">
+        <div class="text-sm text-gray-600">
+            Affichage de 1 à 3 sur 25 pièces
+        </div>
+        <div class="flex space-x-2">
+            <button class="px-3 py-1 border rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                Précédent
+            </button>
+            <button class="px-3 py-1 border rounded-md bg-blue-600 text-white">
+                1
+            </button>
+            <button class="px-3 py-1 border rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                2
+            </button>
+            <button class="px-3 py-1 border rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                3
+            </button>
+            <button class="px-3 py-1 border rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                Suivant
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- izy -->
+
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-800">Liste des Pièces</h1>
+      <div class="flex justify-between items-center mt-4">
+        <div class="relative w-96">
+          <input type="text" [(ngModel)]="searchTerm" (input)="search()"
+                 placeholder="Rechercher par code, marque, OEM..." 
+                 class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+        </div>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+          <i class="fas fa-plus mr-2"></i> Ajouter une pièce
+        </button>
+      </div>
+    </header>
+  
+    <!-- Tableau -->
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+      <!-- En-têtes -->
+      <div class="grid grid-cols-12 bg-gray-100 p-4 font-medium text-gray-700 border-b">
+        <div class="col-span-2">Code</div>
+        <div class="col-span-3">Désignation</div>
+        <div class="col-span-2">Marque</div>
+        <div class="col-span-2">OEM</div>
+        <div class="col-span-1 text-center">Stock</div>
+        <div class="col-span-2 text-right">Prix</div>
+      </div>
+  
+      <!-- Loading -->
+      <ng-container *ngIf="isLoading">
+        <div class="p-8 text-center">
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+      </ng-container>
+  
+      <!-- Pièces -->
+      <div class="divide-y divide-gray-200">
+        <div *ngFor="let piece of filteredPieces" class="grid grid-cols-12 p-4 hover:bg-gray-50 items-center">
+          <div class="col-span-2 font-mono text-blue-600">{{ piece.codeArt }}</div>
+          <div class="col-span-3">{{ piece.lib }}</div>
+          <div class="col-span-2">{{ piece.marque || '-' }}</div>
+          <div class="col-span-2">{{ piece.oem || '-' }}</div>
+          <div class="col-span-1 text-center">
+            <span class="px-2 py-1 text-xs rounded-full" 
+                  [ngClass]="getStatusClass(getStockStatus(piece))">
+              {{ getStockStatus(piece) }}
+            </span>
+          </div>
+          <div class="col-span-2 text-right font-medium">
+            {{ piece.stocks[0].prixFinal ? (piece.stocks[0].prixFinal | currency:'MGA') : '-' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Pagination -->
+    <div class="flex justify-between items-center mt-6">
+      <div class="text-sm text-gray-600">
+        Affichage de {{ filteredPieces.length }} sur {{ pieces.length }} pièces
+      </div>
+    </div>
+  </div>
